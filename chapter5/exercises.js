@@ -1,6 +1,38 @@
+var ANCESTRY_FILE = require('./ancestry.js');
 var arrays = [[1, 2, 3], [4, 5], [6]];
+var ancestry = JSON.parse(ANCESTRY_FILE);
 
-function flatten(arrayInProgress, currentArray) {
+// flattening
+
+function arrayBuilder(arrayInProgress, currentArray) {
   return arrayInProgress.concat(currentArray);
 }
-console.log(arrays.reduce(flatten));
+function flatten(array) {
+  return array.reduce(arrayBuilder)
+}
+
+var flatArray = flatten(arrays);
+console.log(flatArray);
+
+// mother-daughter age difference
+
+function average(array) {
+  function plus(a, b) { return a + b; }
+  return array.reduce(plus) / array.length;
+}
+
+var byName = {};
+ancestry.forEach(function(person) {
+  byName[person.name] = person;
+});
+
+function hasMother(person) { return byName.hasOwnProperty(person.mother); }
+function ageDifference(person) { return person.born - byName[person.mother].born; }
+
+console.log(average(ancestry.filter(hasMother).map(ageDifference)));
+
+// historical life expectancy
+
+function groupBy(property, array) {
+
+}
