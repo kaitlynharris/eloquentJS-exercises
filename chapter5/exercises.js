@@ -33,6 +33,26 @@ console.log(average(ancestry.filter(hasMother).map(ageDifference)));
 
 // historical life expectancy
 
-function groupBy(property, array) {
+function byCentury(person) { return Math.ceil(person.died / 100); }
 
+function groupBy(array, group) {
+  var grouped = {};
+  array.forEach( function(person){
+    category = group(person);
+    if (grouped.hasOwnProperty(category)) {
+      grouped[category].push(person);
+    } else {
+      grouped[category] = [];
+      grouped[category].push(person);
+    }
+  })
+  return grouped;
+}
+
+function ageOfDeath(person) { return person.died - person.born; }
+
+var ancestorsByCentury = groupBy(ancestry, byCentury);
+
+for (var century in ancestorsByCentury) {
+  console.log(century, ":", average(ancestorsByCentury[century].map(ageOfDeath)));
 }
