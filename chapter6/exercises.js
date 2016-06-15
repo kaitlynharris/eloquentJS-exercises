@@ -30,4 +30,19 @@ console.log(new Vector(1, 2).minus(new Vector(2, 3)));
 console.log(new Vector(3, 4).length);
 // → 5
 
-//
+// another cell
+// didn't feel like including all the book code defining TextCell etc.
+// this won't run on its own but it will run in the sandbox
+
+function StretchCell(inner, width, height) {
+  this.inner = inner;
+  this.minWidth = function () {
+    return Math.max(this.inner.minWidth(), width);
+  }
+  this.minHeight = function () {
+    return Math.max(this.inner.minHeight(), height);
+  }
+  this.draw = function(width, height) {
+    return this.inner.draw(width, height);
+  }
+}
